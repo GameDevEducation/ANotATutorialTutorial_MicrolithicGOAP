@@ -14,13 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterHeight: 1.8
   CharacterRadius: 0.4
-  WalkSpeed: 10
+  WalkSpeed: 20
   GroundedThreshold: 0.1
   CollisionBuffer: 0.1
   MovementBlendRate: 0.25
   DefaultMaterial: {fileID: 13400000, guid: 61032d66ebde9498289bb810b4033de4, type: 2}
-  MaterialWhenJumping: {fileID: 13400000, guid: e26873654fd1340d6bd67ff4995370a0,
-    type: 2}
+  MaterialWhenJumping: {fileID: 13400000, guid: e26873654fd1340d6bd67ff4995370a0, type: 2}
   StepCheckLookAhead: 0.45
   MaxStepUpDistance: 0.3
   MinStepDownDistance: 0.3
@@ -29,8 +28,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   CanRun: 1
-  RunMode: 1
-  RunSpeed: 15
+  RunMode: 0
+  RunSpeed: 30
   CanJump: 1
   CanDoubleJump: 0
   JumpHeight: 1.25

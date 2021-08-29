@@ -6,12 +6,14 @@ public class Action_Base : MonoBehaviour
 {
     protected CharacterAgent Agent;
     protected AwarenessSystem Sensors;
+    protected ResourceScanner Resources;
     protected Goal_Base LinkedGoal;
 
     void Awake()
     {
         Agent = GetComponent<CharacterAgent>();
         Sensors = GetComponent<AwarenessSystem>();
+        Resources = GetComponent<ResourceScanner>();
     }
 
     public virtual List<System.Type> GetSupportedGoals()

@@ -16,25 +16,23 @@ public class Goal_Base : MonoBehaviour, IGoal
 {
     protected CharacterAgent Agent;
     protected AwarenessSystem Sensors;
-    protected GOAPUI DebugUI;
+    protected ResourceScanner Resources;
     protected Action_Base LinkedAction;
 
     void Awake()
     {
         Agent = GetComponent<CharacterAgent>();
         Sensors = GetComponent<AwarenessSystem>();
+        Resources = GetComponent<ResourceScanner>();
     }
 
     void Start()
     {
-        DebugUI = FindObjectOfType<GOAPUI>();
     }
 
     void Update()
     {
         OnTickGoal();
-
-        DebugUI.UpdateGoal(this, GetType().Name, LinkedAction ? "Running" : "Paused", CalculatePriority());
     }
 
     public virtual int CalculatePriority()
