@@ -30,8 +30,10 @@ public class CharacterAgent : CharacterBase
     }
 
     // Update is called once per frame
-    protected void Update()
+    protected override void Update()
     {
+        base.Update();
+        
         // have a path and near the end point?
         if (!Agent.pathPending && !Agent.isOnOffMeshLink && DestinationSet && (Agent.remainingDistance <= Agent.stoppingDistance))
         {
