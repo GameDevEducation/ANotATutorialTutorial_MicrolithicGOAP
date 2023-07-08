@@ -55,6 +55,9 @@ public class CharacterMotorConfig : ScriptableObject
     public bool RestrictVerticalRotation = true;
     public float VerticalRotation_Min = -85f;
     public float VerticalRotation_Max = 85f;
+    public bool Invert_YAxis = false;
+    public float Sensitivity_X = 10f;
+    public float Sensitivity_Y = 10f;
 
     [Header("Audio")]
     public float FootstepInterval = 0.5f;

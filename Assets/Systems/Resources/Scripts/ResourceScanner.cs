@@ -51,7 +51,7 @@ public class ResourceScanner : MonoBehaviour
         return bestMatch;
     }
 
-    public ResourceContainer FindNearestContainerOfType(Resources.EType type)
+    public ResourceContainer FindNearestContainerOfType(Resources.EType type, float minAmountNeeded = 0f)
     {
         ResourceContainer bestMatch = null;
         float bestDistance = float.MaxValue;
@@ -68,6 +68,9 @@ public class ResourceScanner : MonoBehaviour
             if (!candidateContainer.CanStore)
                 continue;
 
+            if (candidateContainer.AmountStored < minAmountNeeded)
+                continue;
+
             // closest container?
             float distance = Vector3.Distance(transform.position, candidateContainer.transform.position);
             if (distance < bestDistance)
@@ -78,6 +81,23 @@ public class ResourceScanner : MonoBehaviour
         }
 
         return bestMatch;
+    }
+    
+    public ResourceContainer FindSmallestContainer()
+    {
+        ResourceContainer bestMatch = null;
+
+        // search through the containers
+        for (int index = 0; index < AllContainers.Count; ++index)
+        {
+            var candidateContainer = AllContainers[index];
+
+            // smallest container
+            if (bestMatch == null || candidateContainer.CurrentCapacity < bestMatch.CurrentCapacity)
+                bestMatch = candidateContainer;
+        }
+
+        return bestMatch;        
     }
 
     // Update is called once per frame

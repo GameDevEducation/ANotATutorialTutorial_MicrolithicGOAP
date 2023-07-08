@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 public class ControlSchemeChanged : UnityEvent<PlayerInput> {}
 
 [RequireComponent(typeof(Rigidbody))]
-public class CharacterMotor : MonoBehaviour, IPausable
+public class CharacterMotor : MonoBehaviour
 {
     #pragma warning disable 0649
     [Header("Configuration")]
@@ -61,8 +61,6 @@ public class CharacterMotor : MonoBehaviour, IPausable
 
     protected virtual void Start()
     {
-        PauseManager.Instance.RegisterPausable(this);
-        
         CharacterRB = GetComponent<Rigidbody>();
         CharacterCollider = GetComponent<Collider>();
         Camera = GetComponentInChildren<CinemachineVirtualCamera>();
@@ -113,14 +111,14 @@ public class CharacterMotor : MonoBehaviour, IPausable
     #region Camera Handling
     protected virtual Vector2 GetCameraInput()
     {        
-        return new Vector2(_Internal_LookInput.x * SettingsManager.Settings.Camera.Sensitivity_X, 
-                           _Internal_LookInput.y * SettingsManager.Settings.Camera.Sensitivity_Y * (SettingsManager.Settings.Camera.Invert_YAxis ? 1f : -1f));
+        return new Vector2(_Internal_LookInput.x * Config.Sensitivity_X, 
+                           _Internal_LookInput.y * Config.Sensitivity_Y * (Config.Invert_YAxis ? 1f : -1f));
     }
 
     protected virtual void Update()
     {
         // do nothing if updating is turned off or if paused
-        if (!EnableUpdates || PauseManager.IsPaused)
+        if (!EnableUpdates)
             return;
 
         // retrieve the camera input (already has sensitivity and inversion applied)
@@ -175,7 +173,7 @@ public class CharacterMotor : MonoBehaviour, IPausable
     protected virtual void FixedUpdate()
     {
         // do nothing if updating is turned off or if paused
-        if (!EnableUpdates || PauseManager.IsPaused)
+        if (!EnableUpdates)
             return;
 
         // Update if grounded
@@ -409,12 +407,4 @@ public class CharacterMotor : MonoBehaviour, IPausable
         EnableUpdates = newValue;
     }
     #endregion
-
-    #region IPausable
-    public bool OnPauseRequested()  { return true; }
-    public bool OnResumeRequested() { return true; }
-
-    public void OnPause() { }
-    public void OnResume() { }
-    #endregion    
 }

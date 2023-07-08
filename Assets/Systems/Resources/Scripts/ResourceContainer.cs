@@ -9,11 +9,13 @@ public class ResourceContainer : MonoBehaviour
     [SerializeField] float MinScale = 0.1f;
     [SerializeField] float MaxScale = 3f;
 
-    [SerializeField] float AmountStored = 0f;
-    [SerializeField] float MaxCapacity = 1000f;
+    [SerializeField] float _AmountStored = 0f;
+    [SerializeField] float _MaxCapacity = 1000f;
 
     public Resources.EType ResourceType => Type;
-    public bool CanStore => AmountStored < MaxCapacity;
+    public float CurrentCapacity => _MaxCapacity;
+    public float AmountStored => _AmountStored;
+    public bool CanStore => _AmountStored < _MaxCapacity;
 
     // Start is called before the first frame update
     void Start()
@@ -29,20 +31,30 @@ public class ResourceContainer : MonoBehaviour
 
     public void StoreResource(float amount)
     {
-        AmountStored = Mathf.Min(AmountStored + amount, MaxCapacity);
+        _AmountStored = Mathf.Min(_AmountStored + amount, _MaxCapacity);
 
         UpdateMesh();
     }
 
-    public void RetrieveResource(float amount)
+    public float RetrieveResource(float amount)
     {
-        AmountStored = Mathf.Max(AmountStored - amount, 0f);
+        float amountRetrieved = (amount > _AmountStored) ? _AmountStored : amount;
 
+        _AmountStored = Mathf.Max(_AmountStored - amount, 0f);
+
+        UpdateMesh();
+
+        return amountRetrieved;
+    }
+
+    public void ExpandStorage()
+    {
+        _MaxCapacity += 250f;
         UpdateMesh();
     }
 
     void UpdateMesh()
     {
-        ScaledMesh.localScale = new Vector3(1f, Mathf.Lerp(MinScale, MaxScale, AmountStored / MaxCapacity), 1f);
+        ScaledMesh.localScale = new Vector3(1f, Mathf.Lerp(MinScale, MaxScale, _AmountStored / _MaxCapacity), 1f);
     }
 }

@@ -57,6 +57,11 @@ public class EnemyAI : MonoBehaviour
         
     }
 
+    public void SetDebugText(string newText)
+    {
+        FeedbackDisplay.text = newText;
+    }
+
     public void ReportCanSee(DetectableTarget seen)
     {
         Awareness.ReportCanSee(seen);
@@ -74,32 +79,32 @@ public class EnemyAI : MonoBehaviour
 
     public void OnSuspicious()
     {
-        FeedbackDisplay.text = "I hear you";
+        //FeedbackDisplay.text = "I hear you";
     }
 
     public void OnDetected(GameObject target)
     {
-        FeedbackDisplay.text = "I see you " + target.gameObject.name;
+        //FeedbackDisplay.text = "I see you " + target.gameObject.name;
     }
 
     public void OnFullyDetected(GameObject target)
     {
-        FeedbackDisplay.text = "Charge! " + target.gameObject.name;
+        //FeedbackDisplay.text = "Charge! " + target.gameObject.name;
     }
 
     public void OnLostDetect(GameObject target)
     {
-        FeedbackDisplay.text = "Where are you " + target.gameObject.name;
+        //FeedbackDisplay.text = "Where are you " + target.gameObject.name;
     }
 
     public void OnLostSuspicion()
     {
-        FeedbackDisplay.text = "Where did you go";
+        //FeedbackDisplay.text = "Where did you go";
     }
 
     public void OnFullyLost()
     {
-        FeedbackDisplay.text = "Must be nothing";
+        //FeedbackDisplay.text = "Must be nothing";
     }
 }
 

@@ -23,9 +23,13 @@ public class CharacterAgent : CharacterBase
 
     public bool AtDestination => ReachedDestination;
 
+    Vector3 CurrentDestination;
+
     // Start is called before the first frame update
-    protected void Start()
+    protected override void Start()
     {
+        base.Start();
+        
         Agent = GetComponent<NavMeshAgent>();
     }
 
@@ -110,6 +114,9 @@ public class CharacterAgent : CharacterBase
 
     public virtual void SetDestination(Vector3 destination)
     {
+        if (Vector3.Distance(destination, CurrentDestination) < float.Epsilon)
+            return;
+
         // find nearest spot on navmesh and move there
         NavMeshHit hitResult;
         if (NavMesh.SamplePosition(destination, out hitResult, NearestPointSearchRange, NavMesh.AllAreas))
@@ -117,6 +124,7 @@ public class CharacterAgent : CharacterBase
             Agent.SetDestination(hitResult.position);
             DestinationSet = true;
             ReachedDestination = false;
+            CurrentDestination = destination;
         }
     }
 }
